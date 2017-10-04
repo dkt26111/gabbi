@@ -69,6 +69,7 @@ BASE_TEST = {
     'xfail': False,
     'skip': '',
     'poll': {},
+    'ordered_test_sequence': True,
 }
 
 
@@ -134,7 +135,8 @@ class HTTPTestCase(testtools.TestCase):
         if self.test_data['skip']:
             self.skipTest(self.test_data['skip'])
 
-        if self.prior and not self.prior.has_run:
+        if self.prior and not self.prior.has_run and \
+                self.test_data['ordered_test_sequence']:
             # Use a different result so we don't count this test
             # in the results.
             self.prior.run(result.TestResult())
